@@ -12,7 +12,15 @@
                 "main",
                 "-lpcl_common",
                 "-lpcl_visualization",
-                "-lpcl_io"
+                "-lpcl_io",
+                "-lpcl_kdtree",
+                "-lpcl_registration",
+                "-lpcl_search",
+                "-lpcl_filters",
+                "-lvtkRenderingCore-7.1",
+                "-lvtkCommonDataModel-7.1",
+                "-lvtkCommonMath-7.1",
+                "-lvtkCommonCore-7.1"
             ],
             "group": {
                 "kind": "build",

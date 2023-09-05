@@ -7,12 +7,12 @@
 int main(int argc, char** argv) {
     // Load input pcd files
     pcl::PointCloud<pcl::PointXYZ>::Ptr target_cloud (new pcl::PointCloud<pcl::PointXYZ>);
-    if (pcl::io::loadPCDFile<pcl::PointXYZ>("/home/khan/code/NDT_test/PCD/202307271116_lidar[000060].pcd", *target_cloud) == -1) {
+    if (pcl::io::loadPCDFile<pcl::PointXYZ>("/home/khan/DATA/PCD_pangyo_20230727/202307271116_lidar[000060].pcd", *target_cloud) == -1) {
         PCL_ERROR("Couldn't read file target.pcd \n");
         return (-1);
     }
     pcl::PointCloud<pcl::PointXYZ>::Ptr input_cloud (new pcl::PointCloud<pcl::PointXYZ>);
-    if (pcl::io::loadPCDFile<pcl::PointXYZ>("/home/khan/code/NDT_test/PCD/202307271116_lidar[000063].pcd", *input_cloud) == -1) {
+    if (pcl::io::loadPCDFile<pcl::PointXYZ>("/home/khan/DATA/PCD_pangyo_20230727/202307271116_lidar[000061].pcd", *input_cloud) == -1) {
         PCL_ERROR("Couldn't read file input.pcd \n");
         return (-1);
     }
@@ -34,9 +34,21 @@ int main(int argc, char** argv) {
 
     // Visualize the result
     pcl::visualization::PCLVisualizer viewer("NDT example");
-    viewer.addPointCloud<pcl::PointXYZ>(target_cloud, "target");
-    viewer.addPointCloud<pcl::PointXYZ>(output_cloud, "output");
+
+    // Add input_cloud to the viewer and set its color to green
+    pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> green(input_cloud, 0, 255, 0);
+    viewer.addPointCloud<pcl::PointXYZ>(input_cloud, green, "source");
+
+    // Add target_cloud to the viewer and set its color to yellow
+    pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> yellow(target_cloud, 255, 255, 0);
+    viewer.addPointCloud<pcl::PointXYZ>(target_cloud, yellow, "target");
+
+    // Add output_cloud to the viewer and set its color to blue
+    pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> blue(output_cloud, 0, 0, 255);
+    viewer.addPointCloud<pcl::PointXYZ>(output_cloud, blue, "output");
+
     viewer.spin();
+
 
     return 0;
 }
